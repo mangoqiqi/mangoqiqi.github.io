@@ -1,9 +1,9 @@
 # Site settings
 title: BY Blog
-SEOTitle: 柏荧的博客 | BY Blog
+SEOTitle: Hxd's Blog | BY Blog
 header-img: img/post-bg-desk.jpg
 email: tangtione@gmail.com
-description: "Every failure is leading towards success."
+description: "The Long Way Round."
 keyword: "BY, BY Blog, Hxd的博客"
 url: "http://mangoqiqi.github.io"          # your host, for absolute URL
 baseurl: ""      # for example, '/blog' if your blog hosted on 'host/blog'
@@ -18,12 +18,12 @@ sidebar-avatar: /img/about-BY-gentle.jpg      # use absolute URL, seeing it's us
 
 # SNS settings
 RSS: false
-# weibo_username:     qiubaiying
-zhihu_username:     qiubaiying
-github_username:    qiubaiying
-facebook_username:  baiying.qiu.7
-jianshu_username:   e71990ada2fd
-#twitter_username:   qiubaiying
+# weibo_username:     -
+zhihu_username:     -
+github_username:    mangoqiqi
+facebook_username:  -
+jianshu_username:   -
+#twitter_username:   -
 
 
 
@@ -31,7 +31,7 @@ jianshu_username:   e71990ada2fd
 # Build settings
 # from 2016, 'pygments' is unsupported on GitHub Pages. Use 'rouge' for highlighting instead.
 permalink: pretty
-paginate: 10
+paginate: 7
 exclude: ["less","node_modules","Gruntfile.js","package.json","README.md"]
 anchorjs: true                          # if you want to customize anchor. check out line:181 of `post.html`
 
