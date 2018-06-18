@@ -1,10 +1,10 @@
 # Site settings
 title: Hxd Blog
-SEOTitle: Hxd's Blog | BY Blog
+SEOTitle: Hxd's Blog | MY Blog
 header-img: img/wallhaven-578057.jpg
 email: tangtione@gmail.com
 description: "The Long Way Round."
-keyword: "BY, BY Blog, Hxd的博客"
+keyword: "Blog, Hxd的博客"
 url: "http://mangoqiqi.github.io"          # your host, for absolute URL
 baseurl: ""      # for example, '/blog' if your blog hosted on 'host/blog'
 github_repo: "https://github.com/mangoqiqi/mangoqiqi.github.io.git" # you code repository
@@ -75,7 +75,7 @@ gitalk:
 
 # Analytics settings
 # Baidu Analytics
-ba_track_id: b50bf2b12b5338a1845e33832976fd68
+#ba_track_id: b50bf2b12b5338a1845e33832976fd68
 
 # Google Analytics
 ga_track_id: 'UA-90855596-1'            # Format: UA-xxxxxx-xx
@@ -100,10 +100,10 @@ service-worker: true
 # Friends
 friends: [
     {
-        title: "WY",
+        title: "NO",
         href: ""
     },{
-        title: "简书",
+        title: "网易云音乐",
         href: ""
     }
 ]
