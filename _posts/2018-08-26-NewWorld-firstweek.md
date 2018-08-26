@@ -95,7 +95,6 @@ fb的架构：
 **output**：输出
 
 
-
 ### K8s
 
 URI用于pod的资源定位
@@ -233,7 +232,6 @@ scrape_configs:             #常用的抓取配置文件
     Match msg
     Record msg $re
     
-    
 ```
 
 ```
@@ -260,3 +258,14 @@ bin/fluent-bit -i mem -o es://192.168.99.100:9200/test_index1/test_type1
 
 ## 星期五
 
+
+## 周末
+
+- 学golang
+- 看一下grpc
+
+总结下吧，总的来说都是在学习新的知识，导师分配任务的时候感觉摸不着头脑，智商不够用了😂，项目需要用golang，对于主要使用c/c++和java的我来说入门golang还是蛮轻松的，感觉就是C，java，python（切片）的结合体。可以快速开发。
+
+grpc，先说rpc吧，就是本地远程调用服务端的函数资源啥的。grpc就是以[protocol buffer](https://developers.google.com/protocol-buffers/docs/overview)作为序列化组件的rpc，pb是Google家的开源工具--一种与语言无关，平台无关，可扩展的序列化结构化数据的方法，用于通信协议，数据存储等。
+
+grpc有四中通信（调用方式），即简单一元式rpc，服务端流式rpc，客户端流式rpc，双向流式rpc。比如发微信，假设一端是客户端，另一端是服务端，一元式rpc就是客户端发个请求，服务端回应一个请求（比如正常的函数调用）。服务端流式就是，客户端接收到服务端多个消息。客户端流就是客户端发送多个消息，双向流就是他们的结合，而且互不影响
