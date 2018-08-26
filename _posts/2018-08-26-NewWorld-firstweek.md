@@ -12,7 +12,9 @@ tags: 实习
 
 ## 星期一
 
-命令：`kubectl cordon runner` 使runner不分配pod
+kubectl命令：`kubectl cordon runner` 使runner不分配pod
+
+Choerodon使用：
 
 获得限权角色后：
 - 创建了一个应用，编码为c7n，名称猪齿鱼修改器，模板不选择
@@ -64,7 +66,7 @@ kube-proxy 可以直接运行在物理机上，也可以以 static pod 或者 da
 
 ## 星期二
 
-kibana的使用，创建日志应用并部署，搭建三个节点的k8s集群，通过url定位出错的pod，kunectl命令的用法
+kibana的使用、创建日志应用并部署、搭建三个节点的k8s集群、通过url定位出错的pod、kunectl命令的用法
 
 首先要创建一个graph，再往里面添加各种图形，需要添加变量，变量字段可以通过https://prometheus.choerodon.com.cn来获取，添加之后再配置规则，主要有两个函数`irate`和`delta`，irate计算的是给定时间窗口内的每秒瞬时增加速率，deta计算范围向量中每个时间系列元素的第一个和最后一个值之间的差异v，返回具有给定增量和等效标签的即时向量。delta被外推以覆盖范围向量选择器中指定的全时间范围，因此即使样本值都是整数，也可以获得非整数结果。比如：`irate(http_server_requests_seconds_count{pod_name="$instance"}[25s])`代表每秒的请求数量，`http_server_requests_seconds_count`这个字段是累积的请求数量，25s的意思是从0~25s内的时间。
 再比如`delta(http_server_requests_seconds_count{pod_name="$instance"}[25s])`代表的是请求的差值。
@@ -100,22 +102,36 @@ fb的架构：
 URI用于pod的资源定位
 
 etcd保存整个集群的状态
+
 apiservrer提供入口
+
 controller负责维护集群的状态
+
 schedule负责资源的调度
+
 kubectl负责维护容器的生命周期，包括Valume（CVI）和网络（CNI）
+
 container runtime负责镜像管理以及pod和容器的真正运行（CRI）
+
 kube-proxy负责为service提供cluster内部的服务发现和负载均衡
+
 kube-dns负责为整个集群提供DNS服务
+
 ingress controller为服务提供外网入口
+
 Heapster提供资源监控
+
 Dashboard提供GUI
+
 Federation提供跨可用区的集群
+
 Fluentd-elasticsearch 提供集群日志采集、存储与查询
 
 
 ## 星期三
 #### Prometheus config配置的基本概念
+
+监控服务，用于监控主机资源和容器资源，每个节点运行cadvisor，然后Prometheus监控工具通过node-exporter来收集主机或者node的性能指标，Prometheus首先去读配置文件，里面记录了去哪取指标，如何取等信息。也可以通过扫描label来发现装有node-exporter的node。
 
 ```
 global:        #全局的配置，优先值比较下面的低
@@ -176,47 +192,14 @@ scrape_configs:             #常用的抓取配置文件
 ```
 
 
-```
-<match add>
-  @type stdout
-</match>
-
-<match cp>
-  @type stdout
-</match>
-
-<match kube.log>
-  @type rewrite_tag_filter
-  <rule>
-    key log  
-    pattern ^.*\ c\.p\.\ .*  
-    tag cp  
-  </rule>
-  <rule>
-    key log
-    pattern ^.*
-    tag add  
-  </rule>
-</match>
-
-
-<match d.**>
-  @type stdout
-</match>
-
-<match kubernetes.**>
-  @type rewrite_tag_filter
-  <rule>
-    key $['kubernetes']['namespace_name']
-    pattern ^(.+)$
-    tag $1.${tag}
-  </rule>
-</match>
-
-192.168.12.180 2333
-```
-
 ## 星期四
+
+修改fluentd的match标签，解决不能全部匹配问题。使用rewrite-tag 插件。
+设置revert为 true
+
+
+## 星期五
+修改fluent-bit的out_es插件，使其可以直接定向到elas服务器，从而减少了fluentd组件。主要是通过修改index的指向。
 
 ```
 [INPUT]
@@ -234,10 +217,8 @@ scrape_configs:             #常用的抓取配置文件
     
 ```
 
+
 ```
-$4 = 0x8b8750 "{\"index\":{\"_index\":\"my_index\",\"_type\":\"my_type\"}}\n{\"@timestamp\":\"2018-08-23T06:34:55.679Z\", \"cpu_p\":98.000000, \"user_p\":81.000000, \"system_p\":17.000000, \"cpu0_p_cpu\":98.000000, \"cpu0_p_user\":81.000000, \"cpu0_p_system\":17.000000}\n"
-
-
 {
 	"index": {
 		"_index": "my_index",    ### ->api
@@ -255,9 +236,6 @@ $4 = 0x8b8750 "{\"index\":{\"_index\":\"my_index\",\"_type\":\"my_type\"}}\n{\"@
 
 bin/fluent-bit -i mem -o es://192.168.99.100:9200/test_index1/test_type1
 ```
-
-## 星期五
-
 
 ## 周末
 
