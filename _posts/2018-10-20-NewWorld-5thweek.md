@@ -29,3 +29,29 @@ tags: 实习
 ## 总结
 这周深入了解了ingress的作用和nginx-ingress-controller所做的事情。解决该问题还需要深入的了解集群内的组件，毕竟问了几个同事也没能很好的解决。只能自己做排除法了。
 
+## 周天
+历经两天的排查，终于得出问题了。原来是使用的domain域名解析捣的鬼：
+```
+/ # ping gitlab.h.vk.vu
+PING gitlab.h.vk.vu (192.168.12.175): 56 data bytes
+64 bytes from 192.168.12.175: seq=0 ttl=60 time=2.708 ms
+64 bytes from 192.168.12.175: seq=1 ttl=60 time=2.268 ms
+64 bytes from 192.168.12.175: seq=2 ttl=60 time=2.726 ms
+^C
+--- gitlab.h.vk.vu ping statistics ---
+3 packets transmitted, 3 packets received, 0% packet loss
+round-trip min/avg/max = 2.268/2.567/2.726 ms
+/ # ping gitlab.h.vk.vu
+PING gitlab.h.vk.vu (192.168.33.100): 56 data bytes
+64 bytes from 192.168.33.100: seq=0 ttl=64 time=0.040 ms
+64 bytes from 192.168.33.100: seq=1 ttl=64 time=0.068 ms
+^C
+--- gitlab.h.vk.vu ping statistics ---
+2 packets transmitted, 2 packets received, 0% packet loss
+round-trip min/avg/max = 0.040/0.054/0.068 ms
+```
+
+所以，slaver请求拿value的时候，会隔100次才出现404，就是gitlab.h.vk.vu的dns解析负载均衡搞的鬼。一会儿就会指向192.168.12.175，所以就出现`default-backends 404`.
+
+好了，感谢梓棱哥不辞幸苦跑来加班！
+
